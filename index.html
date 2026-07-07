@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Login Page</title>
+    <title>Interactive Login Page</title>
     <style>
-        /* Basic reset to remove default browser margins and paddings */
+        /* CSS styling (same as before, with a few additions) */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +13,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Center the login container on the screen */
         body {
             display: flex;
             justify-content: center;
@@ -22,7 +21,6 @@
             background-color: #f0f2f5;
         }
 
-        /* Styling the login card */
         .login-container {
             background-color: #ffffff;
             padding: 40px;
@@ -38,7 +36,6 @@
             color: #333333;
         }
 
-        /* Grouping labels and inputs */
         .input-group {
             margin-bottom: 20px;
         }
@@ -50,7 +47,8 @@
             font-size: 14px;
         }
 
-        .input-group input {
+        .input-group input[type="text"],
+        .input-group input[type="password"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #cccccc;
@@ -64,7 +62,20 @@
             border-color: #007bff;
         }
 
-        /* Styling the login button */
+        /* Styling for the checkbox group */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .checkbox-group input {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
         .login-btn {
             width: 100%;
             padding: 12px;
@@ -81,7 +92,17 @@
             background-color: #0056b3;
         }
 
-        /* Extra links at the bottom */
+        /* Styling for our new success message */
+        #message {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            text-align: center;
+        }
+
         .footer-links {
             margin-top: 20px;
             text-align: center;
@@ -92,35 +113,71 @@
             color: #007bff;
             text-decoration: none;
         }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
 
     <div class="login-container">
-        <h2>Kem Cho</h2>
+        <h2>Welcome Back</h2>
         
-        <form action="#" method="POST">
+        <form id="loginForm">
             <div class="input-group">
                 <label for="username">Username or Email</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <input type="text" id="username" placeholder="Enter your username" required>
             </div>
             
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="showPasswordToggle">
+                <label for="showPasswordToggle">Show Password</label>
             </div>
             
             <button type="submit" class="login-btn">Login</button>
         </form>
 
+        <div id="message">Login Successful!</div>
+
         <div class="footer-links">
             <p>Don't have an account? <a href="#">Sign up</a></p>
         </div>
     </div>
+
+    <script>
+        // 1. Grab the elements from the HTML using their IDs
+        const passwordInput = document.getElementById('password');
+        const toggleCheckbox = document.getElementById('showPasswordToggle');
+        const loginForm = document.getElementById('loginForm');
+        const messageBox = document.getElementById('message');
+
+        // 2. Add functionality to the "Show Password" checkbox
+        toggleCheckbox.addEventListener('change', function() {
+            // If the checkbox is checked, change the input type to 'text' so it's readable
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                // Otherwise, change it back to 'password' to hide it with dots
+                passwordInput.type = 'password';
+            }
+        });
+
+        // 3. Add functionality to the Form Submission
+        loginForm.addEventListener('submit', function(event) {
+            // Prevent the form from refreshing the page (which is the default behavior)
+            event.preventDefault();
+
+            // Hide the form and show our success message
+            loginForm.style.display = 'none';
+            messageBox.style.display = 'block';
+
+            // In a real app, you would send the username and password to a server right here!
+            const enteredUsername = document.getElementById('username').value;
+            console.log("Simulating sending data to server for user:", enteredUsername);
+        });
+    </script>
 
 </body>
 </html>
